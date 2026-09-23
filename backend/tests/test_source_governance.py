@@ -86,6 +86,72 @@ class SourceTests(unittest.TestCase):
 
 
 class FinalAuditTests(unittest.TestCase):
+    def test_final_audit_rebuilds_only_source_backed_visuals(self):
+        feature = {"claim_id": "c_feature", "text": "A supports CSV export.", "field": "feature_tree",
+                   "dimension": "功能", "brand": "A", "evidence_ids": ["e_feature"],
+                   "verification": {"verdict": "supported"}}
+        opinion = {"claim_id": "c_opinion", "text": "A user reported slow sync.", "field": "sentiment",
+                   "dimension": "口碑", "brand": "A", "evidence_ids": ["e_opinion"],
+                   "verification": {"verdict": "supported"}}
+        invented = {"claim_id": "c_invented", "text": "B costs 999 USD.", "field": "pricing_model",
+                    "dimension": "定价", "brand": "B", "evidence_ids": ["e_price"],
+                    "verification": {"verdict": "unsupported"}}
+        report = {
+            "brands": ["A", "B"], "claims": [feature, opinion, invented],
+            "evidence": [
+                {"evidence_id": "e_feature", "brand": "A", "source_url": "https://a.test/feature"},
+                {"evidence_id": "e_opinion", "brand": "A", "source_url": "https://community.test/post",
+                 "source_tier": "community"},
+                {"evidence_id": "e_price", "brand": "B", "source_url": "https://b.test/price"},
+            ],
+            "charts": [{"chart_id": "unsafe", "option": {"series": [{"data": [999]}]}}],
+            "structured": {"pricing_model": [{"brand": "B", "price": 999}]},
+            "sentiment": {"overall": {"pos": 88}, "sample_size": 88},
+            "sections": [
+                {"id": "overview", "paragraphs": [], "claims": [feature, opinion]},
+                {"id": "feature", "paragraphs": [], "claims": [feature]},
+                {"id": "sentiment", "paragraphs": [], "claims": [opinion]},
+                {"id": "pricing", "paragraphs": [], "claims": [invented]},
+            ],
+        }
+        result = finalize_report(report, model="test", reviewer=lambda *a, **kw: None)
+        self.assertEqual([f["claim_id"] for f in result["structured"]["verified_facts"]],
+                         ["c_feature", "c_opinion"])
+        chart = result["charts"][0]
+        self.assertEqual(chart["type"], "verified_coverage")
+        self.assertEqual(chart["option"]["series"][0]["data"], [1, 0])
+        self.assertEqual(chart["option"]["series"][1]["data"], [1, 0])
+        self.assertEqual(set(chart["evidence_ids"]), {"e_feature", "e_opinion"})
+        self.assertEqual(result["sections"][0]["charts"], [chart])
+        self.assertEqual(result["sections"][1]["structured"]["type"], "verified_facts")
+        self.assertIsNone(result["sections"][3]["structured"])
+        self.assertEqual(result["sentiment"]["verified_voices"][0]["url"], "https://community.test/post")
+        self.assertNotIn("overall", result["sentiment"])
+        self.assertNotIn("999", str(result["charts"]) + str(result["structured"]))
+
+    def test_old_audited_report_recovers_visuals_when_read(self):
+        import sqlite3
+        from app.core import db
+
+        conn = sqlite3.connect(":memory:", check_same_thread=False)
+        conn.row_factory = sqlite3.Row
+        db._init_schema(conn)
+        report = {"id": "r_old", "title": "Old", "brands": ["A"],
+                  "claims": [{"claim_id": "c1", "text": "A supports CSV export.",
+                              "field": "feature_tree", "brand": "A", "evidence_ids": ["e1"],
+                              "verification": {"verdict": "supported"}}],
+                  "evidence": [{"evidence_id": "e1", "brand": "A", "source_url": "https://a.test"}],
+                  "sections": [{"id": "feature", "claims": [], "charts": [], "structured": None}],
+                  "charts": [], "structured": {}, "sentiment": {}, "final_audit": {"status": "passed"}}
+        try:
+            with patch.object(db, "_connect", return_value=conn):
+                db.save_report(report)
+                restored = db.get_report("r_old")
+        finally:
+            conn.close()
+        self.assertEqual(restored["charts"][0]["type"], "verified_coverage")
+        self.assertEqual(restored["audited_artifact_version"], 1)
+
     def test_fabricated_number_is_removed_and_verified_table_preserved(self):
         claim = {"claim_id": "c1", "text": "A costs 20 USD.", "field": "pricing_model",
                  "evidence_ids": ["e_one"], "verification": {"verdict": "supported"}}
