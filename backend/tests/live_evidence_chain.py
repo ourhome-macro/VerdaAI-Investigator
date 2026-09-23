@@ -35,7 +35,8 @@ def verifier_probe(model):
             "Beta Standard costs USD 15 per user per month, billed monthly. "
             "Alpha supports CSV export. Beta is billed in USD, not EUR.")
     evidence = Evidence("probe", "https://example.org/fixture", "official", "Fixture pricing",
-                        body[:280], "2026-09-23", 80, "test", brand="Alpha", full_text=body)
+                        body[:280], "2026-09-23", 80, "test", brand="Alpha", full_text=body,
+                        source_tier="official", fetch_kind="body")
     ctx = select_evidence([evidence], query="Alpha Beta pricing export", focus=["pricing_model"])
     texts = ["Alpha Standard costs USD 20 per user per month, billed monthly.",
              "Alpha Standard is cheaper than Beta Standard on monthly billing.",

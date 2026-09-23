@@ -1,0 +1,258 @@
+{
+  "version": 1,
+  "notes": "人工合成事实，不是现实车型参数；gold labels仅用于评测，不传入被测核验器。",
+  "cases": [
+    {
+      "id": "monthly_price_supported",
+      "evidence": "Alpha Standard costs USD 20 per user per month, billed monthly.",
+      "claim": "Alpha Standard costs USD 20 per user per month, billed monthly.",
+      "expected": "supported",
+      "field": "pricing_model"
+    },
+    {
+      "id": "monthly_price_contradicted",
+      "evidence": "Alpha Standard costs USD 20 per user per month, billed monthly.",
+      "claim": "Alpha Standard costs USD 200 per user per month.",
+      "expected": "contradicted",
+      "field": "pricing_model"
+    },
+    {
+      "id": "monthly_price_insufficient",
+      "evidence": "Alpha Standard costs USD 20 per user per month, billed monthly.",
+      "claim": "Alpha Standard includes unlimited storage.",
+      "expected": "insufficient",
+      "field": "pricing_model"
+    },
+    {
+      "id": "currency_supported",
+      "evidence": "Beta Pro costs EUR 35 per month in Germany.",
+      "claim": "Beta Pro costs EUR 35 per month in Germany.",
+      "expected": "supported",
+      "field": "pricing_model"
+    },
+    {
+      "id": "currency_contradicted",
+      "evidence": "Beta Pro costs EUR 35 per month in Germany.",
+      "claim": "Beta Pro costs USD 35 per month in Germany.",
+      "expected": "contradicted",
+      "field": "pricing_model"
+    },
+    {
+      "id": "currency_insufficient",
+      "evidence": "Beta Pro costs EUR 35 per month in Germany.",
+      "claim": "Beta Pro includes an annual refund guarantee.",
+      "expected": "insufficient",
+      "field": "pricing_model"
+    },
+    {
+      "id": "annual_supported",
+      "evidence": "Gamma Plus costs USD 180 per user per year.",
+      "claim": "Gamma Plus costs USD 180 per user per year.",
+      "expected": "supported",
+      "field": "pricing_model"
+    },
+    {
+      "id": "annual_contradicted",
+      "evidence": "Gamma Plus costs USD 180 per user per year.",
+      "claim": "Gamma Plus costs USD 180 per user per month.",
+      "expected": "contradicted",
+      "field": "pricing_model"
+    },
+    {
+      "id": "annual_insufficient",
+      "evidence": "Gamma Plus costs USD 180 per user per year.",
+      "claim": "Gamma Plus supports on-premises installation.",
+      "expected": "insufficient",
+      "field": "pricing_model"
+    },
+    {
+      "id": "vehicle_supported",
+      "evidence": "Alpha EV 2026 base trim has a China list price of CNY 239800, excluding options.",
+      "claim": "Alpha EV 2026 base trim has a China list price of CNY 239800, excluding options.",
+      "expected": "supported",
+      "field": "pricing_model"
+    },
+    {
+      "id": "vehicle_contradicted",
+      "evidence": "Alpha EV 2026 base trim has a China list price of CNY 239800, excluding options.",
+      "claim": "Alpha EV 2026 base trim has a China list price of CNY 23980.",
+      "expected": "contradicted",
+      "field": "pricing_model"
+    },
+    {
+      "id": "vehicle_insufficient",
+      "evidence": "Alpha EV 2026 base trim has a China list price of CNY 239800, excluding options.",
+      "claim": "Alpha EV 2026 offers free lifetime charging.",
+      "expected": "insufficient",
+      "field": "pricing_model"
+    },
+    {
+      "id": "finance_supported",
+      "evidence": "Beta EV's advertised monthly financing payment is CNY 2999. The vehicle list price is CNY 299800.",
+      "claim": "Beta EV's advertised monthly financing payment is CNY 2999.",
+      "expected": "supported",
+      "field": "pricing_model"
+    },
+    {
+      "id": "finance_contradicted",
+      "evidence": "Beta EV's advertised monthly financing payment is CNY 2999. The vehicle list price is CNY 299800.",
+      "claim": "Beta EV's vehicle list price is CNY 2999.",
+      "expected": "contradicted",
+      "field": "pricing_model"
+    },
+    {
+      "id": "finance_insufficient",
+      "evidence": "Beta EV's advertised monthly financing payment is CNY 2999. The vehicle list price is CNY 299800.",
+      "claim": "Beta EV offers a guaranteed buyback.",
+      "expected": "insufficient",
+      "field": "pricing_model"
+    },
+    {
+      "id": "range_supported",
+      "evidence": "Gamma EV Long Range has a CLTC rated range of 650 km.",
+      "claim": "Gamma EV Long Range has a CLTC rated range of 650 km.",
+      "expected": "supported",
+      "field": "feature_tree"
+    },
+    {
+      "id": "range_contradicted",
+      "evidence": "Gamma EV Long Range has a CLTC rated range of 650 km.",
+      "claim": "Gamma EV Long Range has a WLTP rated range of 650 km.",
+      "expected": "contradicted",
+      "field": "feature_tree"
+    },
+    {
+      "id": "range_insufficient",
+      "evidence": "Gamma EV Long Range has a CLTC rated range of 650 km.",
+      "claim": "Gamma EV Long Range supports vehicle-to-grid power.",
+      "expected": "insufficient",
+      "field": "feature_tree"
+    },
+    {
+      "id": "trim_supported",
+      "evidence": "Delta EV Premium has 6 seats. Delta EV Standard has 5 seats.",
+      "claim": "Delta EV Premium has 6 seats.",
+      "expected": "supported",
+      "field": "feature_tree"
+    },
+    {
+      "id": "trim_contradicted",
+      "evidence": "Delta EV Premium has 6 seats. Delta EV Standard has 5 seats.",
+      "claim": "Delta EV Standard has 6 seats.",
+      "expected": "contradicted",
+      "field": "feature_tree"
+    },
+    {
+      "id": "trim_insufficient",
+      "evidence": "Delta EV Premium has 6 seats. Delta EV Standard has 5 seats.",
+      "claim": "Delta EV Premium has lidar.",
+      "expected": "insufficient",
+      "field": "feature_tree"
+    },
+    {
+      "id": "powertrain_supported",
+      "evidence": "Epsilon SUV uses a range-extender powertrain with a petrol engine.",
+      "claim": "Epsilon SUV uses a range-extender powertrain with a petrol engine.",
+      "expected": "supported",
+      "field": "feature_tree"
+    },
+    {
+      "id": "powertrain_contradicted",
+      "evidence": "Epsilon SUV uses a range-extender powertrain with a petrol engine.",
+      "claim": "Epsilon SUV is a battery-only electric vehicle without an engine.",
+      "expected": "contradicted",
+      "field": "feature_tree"
+    },
+    {
+      "id": "powertrain_insufficient",
+      "evidence": "Epsilon SUV uses a range-extender powertrain with a petrol engine.",
+      "claim": "Epsilon SUV has a 100 kWh battery.",
+      "expected": "insufficient",
+      "field": "feature_tree"
+    },
+    {
+      "id": "export_supported",
+      "evidence": "Zeta supports CSV export; SAML authentication is unavailable.",
+      "claim": "Zeta supports CSV export.",
+      "expected": "supported",
+      "field": "feature_tree"
+    },
+    {
+      "id": "export_contradicted",
+      "evidence": "Zeta supports CSV export; SAML authentication is unavailable.",
+      "claim": "Zeta supports SAML authentication.",
+      "expected": "contradicted",
+      "field": "feature_tree"
+    },
+    {
+      "id": "export_insufficient",
+      "evidence": "Zeta supports CSV export; SAML authentication is unavailable.",
+      "claim": "Zeta has an offline mobile application.",
+      "expected": "insufficient",
+      "field": "feature_tree"
+    },
+    {
+      "id": "warranty_supported",
+      "evidence": "Eta vehicle warranty lasts 4 years or 80000 km, whichever occurs first.",
+      "claim": "Eta vehicle warranty lasts 4 years or 80000 km, whichever occurs first.",
+      "expected": "supported",
+      "field": "feature_tree"
+    },
+    {
+      "id": "warranty_contradicted",
+      "evidence": "Eta vehicle warranty lasts 4 years or 80000 km, whichever occurs first.",
+      "claim": "Eta vehicle warranty lasts 8 years or 80000 km.",
+      "expected": "contradicted",
+      "field": "feature_tree"
+    },
+    {
+      "id": "warranty_insufficient",
+      "evidence": "Eta vehicle warranty lasts 4 years or 80000 km, whichever occurs first.",
+      "claim": "Eta includes free accident insurance.",
+      "expected": "insufficient",
+      "field": "feature_tree"
+    },
+    {
+      "id": "date_supported",
+      "evidence": "In March 2025, Theta EV was announced with a presale price of CNY 269800.",
+      "claim": "In March 2025, Theta EV was announced with a presale price of CNY 269800.",
+      "expected": "supported",
+      "field": "pricing_model"
+    },
+    {
+      "id": "date_contradicted",
+      "evidence": "In March 2025, Theta EV was announced with a presale price of CNY 269800.",
+      "claim": "Theta EV has a confirmed current September 2026 retail price of CNY 269800.",
+      "expected": "contradicted",
+      "field": "pricing_model"
+    },
+    {
+      "id": "date_insufficient",
+      "evidence": "In March 2025, Theta EV was announced with a presale price of CNY 269800.",
+      "claim": "Theta EV sold 50000 units in September 2026.",
+      "expected": "insufficient",
+      "field": "pricing_model"
+    },
+    {
+      "id": "comparison_supported",
+      "evidence": "Iota costs USD 30 per month. Kappa costs USD 40 per month. Both are billed monthly.",
+      "claim": "Iota costs less than Kappa when both are billed monthly.",
+      "expected": "supported",
+      "field": "pricing_model"
+    },
+    {
+      "id": "comparison_contradicted",
+      "evidence": "Iota costs USD 30 per month. Kappa costs USD 40 per month. Both are billed monthly.",
+      "claim": "Iota costs more than Kappa when both are billed monthly.",
+      "expected": "contradicted",
+      "field": "pricing_model"
+    },
+    {
+      "id": "comparison_insufficient",
+      "evidence": "Iota costs USD 30 per month. Kappa costs USD 40 per month. Both are billed monthly.",
+      "claim": "Iota has more features than Kappa.",
+      "expected": "insufficient",
+      "field": "pricing_model"
+    }
+  ]
+}

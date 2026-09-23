@@ -1,0 +1,948 @@
+{
+  "metrics": {
+    "cases": 36,
+    "false_claim_release_rate": 0.0,
+    "supported_recall": 1.0,
+    "unsupported_rejection_rate": 1.0,
+    "false_cross_validation_rate": 0.0,
+    "elapsed_seconds": 24.94,
+    "tokens": 19183,
+    "model": "deepseek-flash",
+    "note": "Synthetic held-fixed claims, not an estimate of real-web accuracy. Primary source rate is measured on the acceptance report, not these fixtures."
+  },
+  "results": [
+    {
+      "id": "monthly_price_supported",
+      "expected": "supported",
+      "verdict": "supported",
+      "reason": "证据逐字包含完整声明：主体 Alpha Standard、价格 USD 20、单位 per user per month、计费方式 billed monthly。两条证据来自同一 source_group，不构成多源独立验证。",
+      "supports": [
+        {
+          "evidence_id": "e_monthly_price_supported",
+          "quote": "Alpha Standard costs USD 20 per user per month, billed monthly.",
+          "relation": "supports",
+          "start": 0,
+          "end": 63
+        },
+        {
+          "evidence_id": "e_monthly_price_supported_mirror",
+          "quote": "Alpha Standard costs USD 20 per user per month, billed monthly.",
+          "relation": "supports",
+          "start": 0,
+          "end": 63
+        }
+      ],
+      "assessment": {
+        "claim_type": "declared_fact",
+        "scope_complete": true,
+        "temporal_alignment": "consistent",
+        "reason": "原文明确声明 Alpha Standard 的价格为 USD 20 per user per month，且为 billed monthly，主体、价格、币种、计费周期完整。"
+      }
+    },
+    {
+      "id": "monthly_price_contradicted",
+      "expected": "contradicted",
+      "verdict": "contradicted",
+      "reason": "证据明确给出 USD 20，而 Claim 为 USD 200，价格数字不一致，因此判 contradicted。",
+      "supports": [
+        {
+          "evidence_id": "e_monthly_price_contradicted",
+          "quote": "Alpha Standard costs USD 20 per user per month, billed monthly.",
+          "relation": "contradicts",
+          "start": 0,
+          "end": 63
+        },
+        {
+          "evidence_id": "e_monthly_price_contradicted_mirror",
+          "quote": "Alpha Standard costs USD 20 per user per month, billed monthly.",
+          "relation": "contradicts",
+          "start": 0,
+          "end": 63
+        }
+      ],
+      "assessment": {
+        "claim_type": "declared_fact",
+        "scope_complete": true,
+        "temporal_alignment": "consistent",
+        "reason": "原文声明价格为 USD 20 per user per month，而 Claim 声称 USD 200 per user per month，数字直接矛盾。"
+      }
+    },
+    {
+      "id": "monthly_price_insufficient",
+      "expected": "insufficient",
+      "verdict": "insufficient",
+      "reason": "证据只包含价格信息，没有关于 Alpha Standard 存储容量或是否 unlimited 的任何表述，因此不足以支持或反驳。",
+      "supports": [],
+      "assessment": {
+        "claim_type": "declared_fact",
+        "scope_complete": false,
+        "temporal_alignment": "unknown",
+        "reason": "原文仅说明价格与计费周期，未提及 storage 或 unlimited storage，无法验证该配置声明。"
+      }
+    },
+    {
+      "id": "currency_supported",
+      "expected": "supported",
+      "verdict": "supported",
+      "reason": "证据逐字包含完整声明：主体 Beta Pro、币种 EUR、价格 35、周期 per month、地区 Germany。两条证据来自同一 source_group，不构成多源独立验证。",
+      "supports": [
+        {
+          "evidence_id": "e_currency_supported",
+          "quote": "Beta Pro costs EUR 35 per month in Germany.",
+          "relation": "supports",
+          "start": 0,
+          "end": 43
+        },
+        {
+          "evidence_id": "e_currency_supported_mirror",
+          "quote": "Beta Pro costs EUR 35 per month in Germany.",
+          "relation": "supports",
+          "start": 0,
+          "end": 43
+        }
+      ],
+      "assessment": {
+        "claim_type": "declared_fact",
+        "scope_complete": true,
+        "temporal_alignment": "consistent",
+        "reason": "原文明确声明 Beta Pro 在 Germany 的价格为 EUR 35 per month，主体、币种、价格、地区、周期完整。"
+      }
+    },
+    {
+      "id": "currency_contradicted",
+      "expected": "contradicted",
+      "verdict": "contradicted",
+      "reason": "币种不符：原文为EUR 35/月，Claim为USD 35/月，属直接矛盾。",
+      "supports": [
+        {
+          "evidence_id": "e_currency_contradicted",
+          "quote": "Beta Pro costs EUR 35 per month in Germany.",
+          "relation": "contradicts",
+          "start": 0,
+          "end": 43
+        },
+        {
+          "evidence_id": "e_currency_contradicted_mirror",
+          "quote": "Beta Pro costs EUR 35 per month in Germany.",
+          "relation": "contradicts",
+          "start": 0,
+          "end": 43
+        }
+      ],
+      "assessment": {
+        "claim_type": "declared_fact",
+        "scope_complete": true,
+        "temporal_alignment": "unknown",
+        "reason": "原文明确为欧元（EUR）月付，Claim声称美元（USD），币种直接矛盾；地区德国一致，但时间依据缺失。"
+      }
+    },
+    {
+      "id": "currency_insufficient",
+      "expected": "insufficient",
+      "verdict": "insufficient",
+      "reason": "原文只说明价格，未涉及年度退款保证，无支持证据。",
+      "supports": [],
+      "assessment": {
+        "claim_type": "declared_fact",
+        "scope_complete": false,
+        "temporal_alignment": "unknown",
+        "reason": "证据仅涉及价格与币种，未提及任何退款保证，主体条件不完整。"
+      }
+    },
+    {
+      "id": "annual_supported",
+      "expected": "supported",
+      "verdict": "supported",
+      "reason": "币种USD、金额180、按用户、按年全部匹配。",
+      "supports": [
+        {
+          "evidence_id": "e_annual_supported",
+          "quote": "Gamma Plus costs USD 180 per user per year.",
+          "relation": "supports",
+          "start": 0,
+          "end": 43
+        },
+        {
+          "evidence_id": "e_annual_supported_mirror",
+          "quote": "Gamma Plus costs USD 180 per user per year.",
+          "relation": "supports",
+          "start": 0,
+          "end": 43
+        }
+      ],
+      "assessment": {
+        "claim_type": "declared_fact",
+        "scope_complete": true,
+        "temporal_alignment": "unknown",
+        "reason": "原文完整给出产品、币种、金额、按用户、按年口径，与Claim一致；但无时间依据。"
+      }
+    },
+    {
+      "id": "annual_contradicted",
+      "expected": "contradicted",
+      "verdict": "contradicted",
+      "reason": "计费周期不符：原文per year，Claim为per month。",
+      "supports": [
+        {
+          "evidence_id": "e_annual_contradicted",
+          "quote": "Gamma Plus costs USD 180 per user per year.",
+          "relation": "contradicts",
+          "start": 0,
+          "end": 43
+        },
+        {
+          "evidence_id": "e_annual_contradicted_mirror",
+          "quote": "Gamma Plus costs USD 180 per user per year.",
+          "relation": "contradicts",
+          "start": 0,
+          "end": 43
+        }
+      ],
+      "assessment": {
+        "claim_type": "declared_fact",
+        "scope_complete": true,
+        "temporal_alignment": "unknown",
+        "reason": "原文为按年（per year），Claim为按月（per month），计费周期直接矛盾。"
+      }
+    },
+    {
+      "id": "annual_insufficient",
+      "expected": "insufficient",
+      "verdict": "insufficient",
+      "reason": "证据文本只说明 Gamma Plus 的年度用户价格，完全没有提及是否支持本地部署，因此不足以支持或反驳该声明。",
+      "supports": [
+        {
+          "evidence_id": "e_annual_insufficient",
+          "quote": "Gamma Plus costs USD 180 per user per year.",
+          "relation": "partial",
+          "start": 0,
+          "end": 43
+        },
+        {
+          "evidence_id": "e_annual_insufficient_mirror",
+          "quote": "Gamma Plus costs USD 180 per user per year.",
+          "relation": "partial",
+          "start": 0,
+          "end": 43
+        }
+      ],
+      "assessment": {
+        "claim_type": "declared_fact",
+        "scope_complete": false,
+        "temporal_alignment": "unknown",
+        "reason": "证据仅涉及价格，未提及部署方式或本地安装支持，无法验证该声明。"
+      }
+    },
+    {
+      "id": "vehicle_supported",
+      "expected": "supported",
+      "verdict": "supported",
+      "reason": "证据逐字包含声明中的全部要素：Alpha EV 2026 基础配置、中国标价 CNY 239800、不含选装，因此支持该声明。",
+      "supports": [
+        {
+          "evidence_id": "e_vehicle_supported",
+          "quote": "Alpha EV 2026 base trim has a China list price of CNY 239800, excluding options.",
+          "relation": "supports",
+          "start": 0,
+          "end": 80
+        },
+        {
+          "evidence_id": "e_vehicle_supported_mirror",
+          "quote": "Alpha EV 2026 base trim has a China list price of CNY 239800, excluding options.",
+          "relation": "supports",
+          "start": 0,
+          "end": 80
+        }
+      ],
+      "assessment": {
+        "claim_type": "declared_fact",
+        "scope_complete": true,
+        "temporal_alignment": "consistent",
+        "reason": "证据明确给出车型、年款、基础配置、地区、币种、价格及不含选装条件，与声明完全一致。"
+      }
+    },
+    {
+      "id": "vehicle_contradicted",
+      "expected": "contradicted",
+      "verdict": "contradicted",
+      "reason": "证据明确标价为 CNY 239800，声明为 CNY 23980，两者不一致，因此声明被反驳。",
+      "supports": [
+        {
+          "evidence_id": "e_vehicle_contradicted",
+          "quote": "Alpha EV 2026 base trim has a China list price of CNY 239800, excluding options.",
+          "relation": "contradicts",
+          "start": 0,
+          "end": 80
+        },
+        {
+          "evidence_id": "e_vehicle_contradicted_mirror",
+          "quote": "Alpha EV 2026 base trim has a China list price of CNY 239800, excluding options.",
+          "relation": "contradicts",
+          "start": 0,
+          "end": 80
+        }
+      ],
+      "assessment": {
+        "claim_type": "declared_fact",
+        "scope_complete": true,
+        "temporal_alignment": "consistent",
+        "reason": "证据给出的价格为 CNY 239800，而声明为 CNY 23980，数字相差一个数量级，直接矛盾。"
+      }
+    },
+    {
+      "id": "vehicle_insufficient",
+      "expected": "insufficient",
+      "verdict": "insufficient",
+      "reason": "证据文本只说明 Alpha EV 2026 基础配置的中国标价，完全没有提及免费终身充电，因此不足以支持或反驳该声明。",
+      "supports": [
+        {
+          "evidence_id": "e_vehicle_insufficient",
+          "quote": "Alpha EV 2026 base trim has a China list price of CNY 239800, excluding options.",
+          "relation": "partial",
+          "start": 0,
+          "end": 80
+        },
+        {
+          "evidence_id": "e_vehicle_insufficient_mirror",
+          "quote": "Alpha EV 2026 base trim has a China list price of CNY 239800, excluding options.",
+          "relation": "partial",
+          "start": 0,
+          "end": 80
+        }
+      ],
+      "assessment": {
+        "claim_type": "declared_fact",
+        "scope_complete": false,
+        "temporal_alignment": "unknown",
+        "reason": "证据仅涉及价格，未提及充电权益或终身免费充电，无法验证该声明。"
+      }
+    },
+    {
+      "id": "finance_supported",
+      "expected": "supported",
+      "verdict": "supported",
+      "reason": "原文直接声明广告月付金融付款为CNY 2999，币种与月付口径匹配；两条证据来自同一来源组，不构成独立多源验证。",
+      "supports": [
+        {
+          "evidence_id": "e_finance_supported",
+          "quote": "Beta EV's advertised monthly financing payment is CNY 2999.",
+          "relation": "supports",
+          "start": 0,
+          "end": 59
+        },
+        {
+          "evidence_id": "e_finance_supported_mirror",
+          "quote": "Beta EV's advertised monthly financing payment is CNY 2999.",
+          "relation": "supports",
+          "start": 0,
+          "end": 59
+        }
+      ],
+      "assessment": {
+        "claim_type": "declared_fact",
+        "scope_complete": true,
+        "temporal_alignment": "unknown",
+        "reason": "原文明确声明Beta EV广告月付金融付款为CNY 2999，主体、币种、金额、月付口径完整；但未提供时间信息，无法判定时效一致性。"
+      }
+    },
+    {
+      "id": "finance_contradicted",
+      "expected": "contradicted",
+      "verdict": "contradicted",
+      "reason": "原文将CNY 2999归为广告月付金融付款，将车辆标价列为CNY 299800，Claim混淆口径且金额错误。",
+      "supports": [
+        {
+          "evidence_id": "e_finance_contradicted",
+          "quote": "Beta EV's advertised monthly financing payment is CNY 2999. The vehicle list price is CNY 299800.",
+          "relation": "contradicts",
+          "start": 0,
+          "end": 97
+        },
+        {
+          "evidence_id": "e_finance_contradicted_mirror",
+          "quote": "Beta EV's advertised monthly financing payment is CNY 2999. The vehicle list price is CNY 299800.",
+          "relation": "contradicts",
+          "start": 0,
+          "end": 97
+        }
+      ],
+      "assessment": {
+        "claim_type": "declared_fact",
+        "scope_complete": true,
+        "temporal_alignment": "unknown",
+        "reason": "原文明确列出车辆标价为CNY 299800，与Claim所称CNY 2999直接矛盾；CNY 2999在原文中对应月付金融付款而非标价。"
+      }
+    },
+    {
+      "id": "finance_insufficient",
+      "expected": "insufficient",
+      "verdict": "insufficient",
+      "reason": "证据中完全没有关于guaranteed buyback的内容，既无支持也无矛盾。",
+      "supports": [],
+      "assessment": {
+        "claim_type": "declared_fact",
+        "scope_complete": false,
+        "temporal_alignment": "unknown",
+        "reason": "原文仅提及月付金融付款与车辆标价，未提及任何回购或保证回购条款，无法验证该声明。"
+      }
+    },
+    {
+      "id": "range_supported",
+      "expected": "supported",
+      "verdict": "supported",
+      "reason": "原文直接声明Gamma EV Long Range的CLTC额定续航为650 km，车型版本与测试口径匹配；两条证据来自同一来源组，不构成独立多源验证。",
+      "supports": [
+        {
+          "evidence_id": "e_range_supported",
+          "quote": "Gamma EV Long Range has a CLTC rated range of 650 km.",
+          "relation": "supports",
+          "start": 0,
+          "end": 53
+        },
+        {
+          "evidence_id": "e_range_supported_mirror",
+          "quote": "Gamma EV Long Range has a CLTC rated range of 650 km.",
+          "relation": "supports",
+          "start": 0,
+          "end": 53
+        }
+      ],
+      "assessment": {
+        "claim_type": "declared_fact",
+        "scope_complete": true,
+        "temporal_alignment": "unknown",
+        "reason": "原文明确声明Gamma EV Long Range的CLTC额定续航为650 km，主体、版本、测试口径、数值完整；但未提供时间信息。"
+      }
+    },
+    {
+      "id": "range_contradicted",
+      "expected": "contradicted",
+      "verdict": "contradicted",
+      "reason": "续航数值650 km一致，但测试口径不同（CLTC vs WLTP），不同口径不能等同，故整体矛盾。",
+      "supports": [
+        {
+          "evidence_id": "e_range_contradicted",
+          "quote": "Gamma EV Long Range has a CLTC rated range of 650 km.",
+          "relation": "contradicts",
+          "start": 0,
+          "end": 53
+        },
+        {
+          "evidence_id": "e_range_contradicted_mirror",
+          "quote": "Gamma EV Long Range has a CLTC rated range of 650 km.",
+          "relation": "contradicts",
+          "start": 0,
+          "end": 53
+        }
+      ],
+      "assessment": {
+        "claim_type": "declared_fact",
+        "scope_complete": true,
+        "temporal_alignment": "unknown",
+        "reason": "原文明确标注为CLTC续航，与Claim的WLTP口径冲突；无时间信息。"
+      }
+    },
+    {
+      "id": "range_insufficient",
+      "expected": "insufficient",
+      "verdict": "insufficient",
+      "reason": "原文只说明CLTC续航，未涉及车辆到电网供电能力，无法支持或反驳。",
+      "supports": [],
+      "assessment": {
+        "claim_type": "declared_fact",
+        "scope_complete": false,
+        "temporal_alignment": "unknown",
+        "reason": "证据仅涉及续航，未提及V2G功能，主体条件不完整。"
+      }
+    },
+    {
+      "id": "trim_supported",
+      "expected": "supported",
+      "verdict": "supported",
+      "reason": "原文逐字声明Delta EV Premium has 6 seats，与Claim完全一致。",
+      "supports": [
+        {
+          "evidence_id": "e_trim_supported",
+          "quote": "Delta EV Premium has 6 seats.",
+          "relation": "supports",
+          "start": 0,
+          "end": 29
+        },
+        {
+          "evidence_id": "e_trim_supported_mirror",
+          "quote": "Delta EV Premium has 6 seats.",
+          "relation": "supports",
+          "start": 0,
+          "end": 29
+        }
+      ],
+      "assessment": {
+        "claim_type": "declared_fact",
+        "scope_complete": true,
+        "temporal_alignment": "unknown",
+        "reason": "原文直接声明Delta EV Premium为6座，主体与配置完整；无时间信息。"
+      }
+    },
+    {
+      "id": "trim_contradicted",
+      "expected": "contradicted",
+      "verdict": "contradicted",
+      "reason": "原文声明Delta EV Standard has 5 seats，直接否定Claim的6座。",
+      "supports": [
+        {
+          "evidence_id": "e_trim_contradicted",
+          "quote": "Delta EV Standard has 5 seats.",
+          "relation": "contradicts",
+          "start": 30,
+          "end": 60
+        },
+        {
+          "evidence_id": "e_trim_contradicted_mirror",
+          "quote": "Delta EV Standard has 5 seats.",
+          "relation": "contradicts",
+          "start": 30,
+          "end": 60
+        }
+      ],
+      "assessment": {
+        "claim_type": "declared_fact",
+        "scope_complete": true,
+        "temporal_alignment": "unknown",
+        "reason": "原文明确声明Delta EV Standard为5座，与Claim的6座冲突；无时间信息。"
+      }
+    },
+    {
+      "id": "trim_insufficient",
+      "expected": "insufficient",
+      "verdict": "insufficient",
+      "reason": "证据内容与lidar无关，缺少关于lidar配置的任何信息。",
+      "supports": [
+        {
+          "evidence_id": "e_trim_insufficient",
+          "quote": "Delta EV Premium has 6 seats. Delta EV Standard has 5 seats.",
+          "relation": "partial",
+          "start": 0,
+          "end": 60
+        },
+        {
+          "evidence_id": "e_trim_insufficient_mirror",
+          "quote": "Delta EV Premium has 6 seats. Delta EV Standard has 5 seats.",
+          "relation": "partial",
+          "start": 0,
+          "end": 60
+        }
+      ],
+      "assessment": {
+        "claim_type": "declared_fact",
+        "scope_complete": false,
+        "temporal_alignment": "unknown",
+        "reason": "证据仅说明Delta EV Premium的座位数，未提及lidar配置，无法支持或反驳该声明。"
+      }
+    },
+    {
+      "id": "powertrain_supported",
+      "expected": "supported",
+      "verdict": "supported",
+      "reason": "证据直接且完整地支持声明内容。",
+      "supports": [
+        {
+          "evidence_id": "e_powertrain_supported",
+          "quote": "Epsilon SUV uses a range-extender powertrain with a petrol engine.",
+          "relation": "supports",
+          "start": 0,
+          "end": 66
+        },
+        {
+          "evidence_id": "e_powertrain_supported_mirror",
+          "quote": "Epsilon SUV uses a range-extender powertrain with a petrol engine.",
+          "relation": "supports",
+          "start": 0,
+          "end": 66
+        }
+      ],
+      "assessment": {
+        "claim_type": "declared_fact",
+        "scope_complete": true,
+        "temporal_alignment": "consistent",
+        "reason": "证据逐字陈述Epsilon SUV使用带汽油发动机的增程动力系统，与声明完全一致。"
+      }
+    },
+    {
+      "id": "powertrain_contradicted",
+      "expected": "contradicted",
+      "verdict": "contradicted",
+      "reason": "证据与声明直接冲突，声明被反驳。",
+      "supports": [
+        {
+          "evidence_id": "e_powertrain_contradicted",
+          "quote": "Epsilon SUV uses a range-extender powertrain with a petrol engine.",
+          "relation": "contradicts",
+          "start": 0,
+          "end": 66
+        },
+        {
+          "evidence_id": "e_powertrain_contradicted_mirror",
+          "quote": "Epsilon SUV uses a range-extender powertrain with a petrol engine.",
+          "relation": "contradicts",
+          "start": 0,
+          "end": 66
+        }
+      ],
+      "assessment": {
+        "claim_type": "declared_fact",
+        "scope_complete": true,
+        "temporal_alignment": "consistent",
+        "reason": "证据明确说明Epsilon SUV使用带汽油发动机的增程动力系统，与'纯电无发动机'的声明直接矛盾。"
+      }
+    },
+    {
+      "id": "powertrain_insufficient",
+      "expected": "insufficient",
+      "verdict": "insufficient",
+      "reason": "证据未包含电池容量信息，无法支持或反驳该声明。",
+      "supports": [
+        {
+          "evidence_id": "e_powertrain_insufficient",
+          "quote": "Epsilon SUV uses a range-extender powertrain with a petrol engine.",
+          "relation": "partial",
+          "start": 0,
+          "end": 66
+        },
+        {
+          "evidence_id": "e_powertrain_insufficient_mirror",
+          "quote": "Epsilon SUV uses a range-extender powertrain with a petrol engine.",
+          "relation": "partial",
+          "start": 0,
+          "end": 66
+        }
+      ],
+      "assessment": {
+        "claim_type": "declared_fact",
+        "scope_complete": false,
+        "temporal_alignment": "unknown",
+        "reason": "证据仅描述动力系统类型，未提及电池容量，无法验证100 kWh电池的声明。"
+      }
+    },
+    {
+      "id": "export_supported",
+      "expected": "supported",
+      "verdict": "supported",
+      "reason": "两条证据均逐字声明 Zeta 支持 CSV 导出，直接支持该声明。",
+      "supports": [
+        {
+          "evidence_id": "e_export_supported",
+          "quote": "Zeta supports CSV export; SAML authentication is unavailable.",
+          "relation": "supports",
+          "start": 0,
+          "end": 61
+        },
+        {
+          "evidence_id": "e_export_supported_mirror",
+          "quote": "Zeta supports CSV export; SAML authentication is unavailable.",
+          "relation": "supports",
+          "start": 0,
+          "end": 61
+        }
+      ],
+      "assessment": {
+        "claim_type": "declared_fact",
+        "scope_complete": true,
+        "temporal_alignment": "consistent",
+        "reason": "原文明确声明 Zeta 支持 CSV 导出，主体与功能完整，无时间或地区限定。"
+      }
+    },
+    {
+      "id": "export_contradicted",
+      "expected": "contradicted",
+      "verdict": "contradicted",
+      "reason": "两条证据均明确声明 SAML 认证不可用，直接否定该声明。",
+      "supports": [
+        {
+          "evidence_id": "e_export_contradicted",
+          "quote": "Zeta supports CSV export; SAML authentication is unavailable.",
+          "relation": "contradicts",
+          "start": 0,
+          "end": 61
+        },
+        {
+          "evidence_id": "e_export_contradicted_mirror",
+          "quote": "Zeta supports CSV export; SAML authentication is unavailable.",
+          "relation": "contradicts",
+          "start": 0,
+          "end": 61
+        }
+      ],
+      "assessment": {
+        "claim_type": "declared_fact",
+        "scope_complete": true,
+        "temporal_alignment": "consistent",
+        "reason": "原文明确声明 SAML authentication is unavailable，与声称支持 SAML 认证直接矛盾。"
+      }
+    },
+    {
+      "id": "export_insufficient",
+      "expected": "insufficient",
+      "verdict": "insufficient",
+      "reason": "证据未提及离线移动应用，缺乏支持或反驳信息。",
+      "supports": [],
+      "assessment": {
+        "claim_type": "declared_fact",
+        "scope_complete": false,
+        "temporal_alignment": "unknown",
+        "reason": "原文仅提及 CSV 导出与 SAML 认证不可用，未涉及离线移动应用，无法判断。"
+      }
+    },
+    {
+      "id": "warranty_supported",
+      "expected": "supported",
+      "verdict": "supported",
+      "reason": "两条证据均逐字声明 Eta 车辆保修 4 年或 80000 公里以先到者为准，直接支持该声明。",
+      "supports": [
+        {
+          "evidence_id": "e_warranty_supported",
+          "quote": "Eta vehicle warranty lasts 4 years or 80000 km, whichever occurs first.",
+          "relation": "supports",
+          "start": 0,
+          "end": 71
+        },
+        {
+          "evidence_id": "e_warranty_supported_mirror",
+          "quote": "Eta vehicle warranty lasts 4 years or 80000 km, whichever occurs first.",
+          "relation": "supports",
+          "start": 0,
+          "end": 71
+        }
+      ],
+      "assessment": {
+        "claim_type": "declared_fact",
+        "scope_complete": true,
+        "temporal_alignment": "consistent",
+        "reason": "原文完整声明 Eta 车辆保修期限为 4 年或 80000 公里，以先到者为准，主体、期限与条件完整。"
+      }
+    },
+    {
+      "id": "warranty_contradicted",
+      "expected": "contradicted",
+      "verdict": "contradicted",
+      "reason": "Claim称8年或80000 km，原文为4年或80000 km，年限口径矛盾，故判contradicted。",
+      "supports": [
+        {
+          "evidence_id": "e_warranty_contradicted",
+          "quote": "Eta vehicle warranty lasts 4 years or 80000 km, whichever occurs first.",
+          "relation": "contradicts",
+          "start": 0,
+          "end": 71
+        },
+        {
+          "evidence_id": "e_warranty_contradicted_mirror",
+          "quote": "Eta vehicle warranty lasts 4 years or 80000 km, whichever occurs first.",
+          "relation": "contradicts",
+          "start": 0,
+          "end": 71
+        }
+      ],
+      "assessment": {
+        "claim_type": "declared_fact",
+        "scope_complete": true,
+        "temporal_alignment": "unknown",
+        "reason": "原文明确给出质保为4年或80000 km（以先到者为准），与Claim的8年直接矛盾；时间依据未提供。"
+      }
+    },
+    {
+      "id": "warranty_insufficient",
+      "expected": "insufficient",
+      "verdict": "insufficient",
+      "reason": "原文只说明质保4年或80000 km，与免费事故保险无关，无法支持或反驳该Claim。",
+      "supports": [
+        {
+          "evidence_id": "e_warranty_insufficient",
+          "quote": "Eta vehicle warranty lasts 4 years or 80000 km, whichever occurs first.",
+          "relation": "partial",
+          "start": 0,
+          "end": 71
+        },
+        {
+          "evidence_id": "e_warranty_insufficient_mirror",
+          "quote": "Eta vehicle warranty lasts 4 years or 80000 km, whichever occurs first.",
+          "relation": "partial",
+          "start": 0,
+          "end": 71
+        }
+      ],
+      "assessment": {
+        "claim_type": "declared_fact",
+        "scope_complete": false,
+        "temporal_alignment": "unknown",
+        "reason": "证据仅涉及质保期限，未提及免费事故保险，主体条件缺失。"
+      }
+    },
+    {
+      "id": "date_supported",
+      "expected": "supported",
+      "verdict": "supported",
+      "reason": "原文逐字包含Claim全部要素：2025年3月、Theta EV、预售价CNY 269800。",
+      "supports": [
+        {
+          "evidence_id": "e_date_supported",
+          "quote": "In March 2025, Theta EV was announced with a presale price of CNY 269800.",
+          "relation": "supports",
+          "start": 0,
+          "end": 73
+        },
+        {
+          "evidence_id": "e_date_supported_mirror",
+          "quote": "In March 2025, Theta EV was announced with a presale price of CNY 269800.",
+          "relation": "supports",
+          "start": 0,
+          "end": 73
+        }
+      ],
+      "assessment": {
+        "claim_type": "declared_fact",
+        "scope_complete": true,
+        "temporal_alignment": "consistent",
+        "reason": "原文完整给出时间（2025年3月）、车型（Theta EV）、币种（CNY）和预售价269800，与Claim一致。"
+      }
+    },
+    {
+      "id": "date_contradicted",
+      "expected": "contradicted",
+      "verdict": "contradicted",
+      "reason": "原文是2025年3月预售价，Claim称2026年9月当前零售价，时间和价格口径矛盾。",
+      "supports": [
+        {
+          "evidence_id": "e_date_contradicted",
+          "quote": "In March 2025, Theta EV was announced with a presale price of CNY 269800.",
+          "relation": "contradicts",
+          "start": 0,
+          "end": 73
+        },
+        {
+          "evidence_id": "e_date_contradicted_mirror",
+          "quote": "In March 2025, Theta EV was announced with a presale price of CNY 269800.",
+          "relation": "contradicts",
+          "start": 0,
+          "end": 73
+        }
+      ],
+      "assessment": {
+        "claim_type": "declared_fact",
+        "scope_complete": false,
+        "temporal_alignment": "conflicting",
+        "reason": "原文为2025年3月的预售价，Claim声称2026年9月的当前零售价，时间与价格性质（预售vs零售）均不符。"
+      }
+    },
+    {
+      "id": "date_insufficient",
+      "expected": "insufficient",
+      "verdict": "insufficient",
+      "reason": "证据内容与声明主题（销量）和时间（2026年9月）均不匹配，缺乏支持。",
+      "supports": [
+        {
+          "evidence_id": "e_date_insufficient",
+          "quote": "In March 2025, Theta EV was announced with a presale price of CNY 269800.",
+          "relation": "partial",
+          "start": 0,
+          "end": 73
+        },
+        {
+          "evidence_id": "e_date_insufficient_mirror",
+          "quote": "In March 2025, Theta EV was announced with a presale price of CNY 269800.",
+          "relation": "partial",
+          "start": 0,
+          "end": 73
+        }
+      ],
+      "assessment": {
+        "claim_type": "declared_fact",
+        "scope_complete": false,
+        "temporal_alignment": "unknown",
+        "reason": "证据仅提及2025年3月Theta EV的预售价格，未提供2026年9月销量数据，无法验证该声明。"
+      }
+    },
+    {
+      "id": "comparison_supported",
+      "expected": "supported",
+      "verdict": "supported",
+      "reason": "比较对象、价格、币种和计费周期均完整，结论成立。",
+      "supports": [
+        {
+          "evidence_id": "e_comparison_supported",
+          "quote": "Iota costs USD 30 per month. Kappa costs USD 40 per month. Both are billed monthly.",
+          "relation": "supports",
+          "start": 0,
+          "end": 83
+        },
+        {
+          "evidence_id": "e_comparison_supported_mirror",
+          "quote": "Iota costs USD 30 per month. Kappa costs USD 40 per month. Both are billed monthly.",
+          "relation": "supports",
+          "start": 0,
+          "end": 83
+        }
+      ],
+      "assessment": {
+        "claim_type": "comparison",
+        "scope_complete": true,
+        "temporal_alignment": "consistent",
+        "reason": "证据明确给出Iota月费30美元、Kappa月费40美元，且均为月付，直接支持Iota比Kappa便宜的比较结论。"
+      }
+    },
+    {
+      "id": "comparison_contradicted",
+      "expected": "contradicted",
+      "verdict": "contradicted",
+      "reason": "证据明确支持相反结论，声明被否定。",
+      "supports": [
+        {
+          "evidence_id": "e_comparison_contradicted",
+          "quote": "Iota costs USD 30 per month. Kappa costs USD 40 per month. Both are billed monthly.",
+          "relation": "contradicts",
+          "start": 0,
+          "end": 83
+        },
+        {
+          "evidence_id": "e_comparison_contradicted_mirror",
+          "quote": "Iota costs USD 30 per month. Kappa costs USD 40 per month. Both are billed monthly.",
+          "relation": "contradicts",
+          "start": 0,
+          "end": 83
+        }
+      ],
+      "assessment": {
+        "claim_type": "comparison",
+        "scope_complete": true,
+        "temporal_alignment": "consistent",
+        "reason": "证据显示Iota月费30美元低于Kappa的40美元，与声明'Iota比Kappa贵'直接矛盾。"
+      }
+    },
+    {
+      "id": "comparison_insufficient",
+      "expected": "insufficient",
+      "verdict": "insufficient",
+      "reason": "缺乏关于功能数量的任何证据，声明无法被支持或反驳。",
+      "supports": [
+        {
+          "evidence_id": "e_comparison_insufficient",
+          "quote": "Iota costs USD 30 per month. Kappa costs USD 40 per month. Both are billed monthly.",
+          "relation": "partial",
+          "start": 0,
+          "end": 83
+        },
+        {
+          "evidence_id": "e_comparison_insufficient_mirror",
+          "quote": "Iota costs USD 30 per month. Kappa costs USD 40 per month. Both are billed monthly.",
+          "relation": "partial",
+          "start": 0,
+          "end": 83
+        }
+      ],
+      "assessment": {
+        "claim_type": "comparison",
+        "scope_complete": false,
+        "temporal_alignment": "unknown",
+        "reason": "证据仅涉及价格和计费周期，未提及功能数量或任何功能比较信息，无法验证功能多少的声明。"
+      }
+    }
+  ]
+}

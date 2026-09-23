@@ -14,7 +14,8 @@ from app.core.models import Evidence
 
 def ev(eid, brand="A", text="A pricing monthly USD 20.", url=None):
     return Evidence(eid, url or f"https://{eid}.example/pricing", "official", brand + " plans",
-                    text[:280], "2026-09-23", 80, "L1-025", brand=brand, full_text=text)
+                    text[:280], "2026-09-23", 80, "L1-025", brand=brand, full_text=text,
+                    source_tier="official", fetch_kind="body")
 
 
 def claim(eids=None, text="A costs USD 20 monthly.", cid="c1"):
@@ -23,6 +24,23 @@ def claim(eids=None, text="A costs USD 20 monthly.", cid="c1"):
 
 
 class EvidenceSelectionTests(unittest.TestCase):
+    def test_brand_analysis_has_isolated_evidence_and_copied_request_context(self):
+        from contextvars import ContextVar
+        marker = ContextVar('analysis-test-context', default='missing')
+        token = marker.set('request-owner')
+        records = []
+        def analyze_brand(query, brands, focus, evidence, members, *args):
+            records.append((brands[0], [e.brand for e in evidence], marker.get()))
+            return {'claims': [{'text': brands[0]}], 'evidence_selection': []}
+        try:
+            with patch.object(orch, '_analyze_brand', side_effect=analyze_brand):
+                result = orch._analyze('compare', ['A', 'B', 'C'], ['定价'],
+                                       [ev('a', 'A'), ev('b', 'B'), ev('c', 'C')], ['L2-001'])
+            self.assertEqual({c['text'] for c in result['claims']}, {'A', 'B', 'C'})
+            self.assertEqual(sorted(records), [(b, [b], 'request-owner') for b in ['A', 'B', 'C']])
+        finally:
+            marker.reset(token)
+
     def test_tail_brand_and_late_passage_survive_roundtrip(self):
         evidence = [ev(f"a{i}", text="A product feature integration.") for i in range(40)]
         tail = ev("tail", "B", "Company introduction. " * 300 + "B pricing monthly USD 37 per seat.")
@@ -77,6 +95,7 @@ class VerificationTests(unittest.TestCase):
 
     def review(self, verdict="supported", quote="A pricing monthly USD 20.", relation="supports"):
         return lambda *a, **kw: {"results": [{"claim_id": "c1", "verdict": verdict,
+            "assessment": {"claim_type": "declared_fact", "scope_complete": True, "temporal_alignment": "consistent"},
             "reason": "checked", "supports": [{"evidence_id": eid, "quote": quote, "relation": relation}
                                                for eid in ("e1", "e2")]}]}
 
@@ -199,6 +218,7 @@ class ReworkTests(unittest.TestCase):
                     {"id": "L1-025", "reason": "collect"}, {"id": "L2-001", "reason": "analysis"}]}
         cfg = {**orch.MODE_CONFIG["quick"], "sections": ["summary"], "sentiment_brands": 0, "rework_rounds": 1}
         with ExitStack() as stack:
+            stack.enter_context(patch.object(orch, "finalize_report", side_effect=lambda report, **kw: report))
             stack.enter_context(patch.dict(orch.MODE_CONFIG, {"quick": cfg}))
             stack.enter_context(patch.object(orch.db, "get_task", return_value={"query": "A pricing", "clarifications": {"_mode": "quick"}}))
             for name, result in (("_plan_research", plan), ("_dispatch_experts", dispatch),

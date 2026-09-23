@@ -1,0 +1,57 @@
+{
+  "task_id": "t_19a38f756db248919155202c426bd886",
+  "report_id": "r_ff2f64977a744baa90f4df8fe5b0f6db",
+  "url": "http://127.0.0.1:3400/report/r_ff2f64977a744baa90f4df8fe5b0f6db",
+  "verified_claims": 21,
+  "evidence_count": 102,
+  "source_governance": {
+    "primary_source_ratio": 0.48,
+    "original_source_groups": 17,
+    "policy_version": "2026-09-23.1",
+    "brands": {
+      "特斯拉": {
+        "evidence": 53,
+        "primary": 14
+      },
+      "比亚迪": {
+        "evidence": 25,
+        "primary": 19
+      },
+      "理想": {
+        "evidence": 24,
+        "primary": 16
+      }
+    }
+  },
+  "quality_status": "needs_review",
+  "final_audit": "passed",
+  "browser_errors": [],
+  "disconnect_resume": true,
+  "checks": "all three brands have admitted product and pricing claims",
+  "confidence_review": {
+    "policy_version": "2026-09-23.v2",
+    "reviewed_at": "2026-09-23T12:45:23",
+    "before": {
+      "levels": {
+        "low": 22,
+        "unverified": 2
+      },
+      "supported": 22,
+      "cross_validated": 0,
+      "single_authority": 0
+    },
+    "after": {
+      "levels": {
+        "high": 21,
+        "unverified": 3
+      },
+      "supported": 21,
+      "cross_validated": 0,
+      "single_authority": 21
+    },
+    "support_set_changed": true,
+    "tokens": 109194,
+    "elapsed_seconds": 45.92,
+    "note": "重新核验的是已保存的原文快照，没有重新抓取实时价格；历史研究质检状态未自动提升"
+  }
+}
