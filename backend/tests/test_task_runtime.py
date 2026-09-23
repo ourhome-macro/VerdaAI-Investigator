@@ -75,6 +75,10 @@ class RuntimeTests(unittest.IsolatedAsyncioTestCase):
         restored = rt.collection_checkpoint('task')
         self.assertEqual(len(restored), 1)
         self.assertEqual(restored[0].full_text, ev.full_text)
+        ev.evidence_id = 'e2'
+        ev.research_dimensions = ['architecture']
+        rt.append_event('task', 1, {'type': 'evidence', 'data': ev.to_dict()})
+        self.assertEqual(len(rt.collection_checkpoint('task')), 2)
 
 
 if __name__ == '__main__':

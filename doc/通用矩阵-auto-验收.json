@@ -1,0 +1,16 @@
+{
+  "case": "auto",
+  "task_id": "t_33bb2ea641fb402d81a61e1309f30a46",
+  "report_id": "r_002db18930f5481daf6aa0add81727ec",
+  "url": "http://127.0.0.1:3400/report/r_002db18930f5481daf6aa0add81727ec",
+  "cells": 6,
+  "fact_covered": 6,
+  "freshness_covered": 2,
+  "claims": 12,
+  "high": 10,
+  "quality_status": "needs_review",
+  "final_audit": "passed",
+  "rework_rounds": 1,
+  "browser_errors": [],
+  "checks": "real API + frontend stream + matrix attribution + draft honesty + page reload"
+}

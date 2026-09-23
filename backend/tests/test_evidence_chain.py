@@ -29,7 +29,7 @@ class EvidenceSelectionTests(unittest.TestCase):
         marker = ContextVar('analysis-test-context', default='missing')
         token = marker.set('request-owner')
         records = []
-        def analyze_brand(query, brands, focus, evidence, members, *args):
+        def analyze_brand(query, brands, focus, evidence, members, *args, **kwargs):
             records.append((brands[0], [e.brand for e in evidence], marker.get()))
             return {'claims': [{'text': brands[0]}], 'evidence_selection': []}
         try:
@@ -151,8 +151,7 @@ class VerificationTests(unittest.TestCase):
                            "evidence_ids": ["hidden", "not_real"], "author": "L2-001"}]}
         with patch.object(orch, "chat_json", return_value=raw):
             result = orch._analyze("A pricing", ["A"], ["定价"], evidence, ["L2-001"])
-        self.assertEqual(result["claims"][0]["evidence_ids"], [])
-        self.assertEqual(result["claims"][0]["confidence"], "unverified")
+        self.assertEqual(result["claims"], [])  # Invalid references are rejected before NLI.
 
     def test_dimension_coverage_requires_verified_matching_claim(self):
         c = claim()
@@ -167,14 +166,14 @@ class VerificationTests(unittest.TestCase):
         quality = evaluate_quality(["A"], ["定价"], [c], self.evidence, {})
         self.assertFalse(quality.coverage_by_dimension["定价"])
         collect = next(e for e in decide_rework(quality) if e.receiver == "collect")
-        self.assertEqual(collect.payload["brands"], ["A"])
-        self.assertIn(c["text"], collect.payload["queries"])
+        self.assertEqual(collect.payload["cells"][0]["brand"], "A")
+        self.assertEqual(collect.payload["cells"][0]["dimension"], "pricing_model")
 
     def test_analysis_failure_never_creates_high_confidence_fallback(self):
         with patch.object(orch, "chat_json", side_effect=TimeoutError("do-not-expose-provider-error")):
             result = orch._analyze("A pricing", ["A"], ["定价"], self.evidence, ["L2-001"])
         self.assertEqual(result["claims"], [])
-        self.assertEqual(result["analysis_error"], "TimeoutError")
+        self.assertEqual(result["analysis_errors"], ["TimeoutError"])
 
     def test_writing_only_receives_supported_claims_not_auxiliary_numbers(self):
         accepted = claim(text="A costs USD 20 monthly.")
@@ -205,13 +204,15 @@ class ReworkTests(unittest.TestCase):
         before = ev("before", text="A pricing was USD 99 monthly.")
         after = ev("after", text="A pricing is now USD 20 monthly.")
         snapshots = []
-        def analyze(query, brands, focus, evidences, members, *args):
+        def analyze(query, brands, focus, evidences, members, *args, **kwargs):
             snapshots.append([e.evidence_id for e in evidences])
             ctx = select_evidence(evidences, query="A pricing now", brands=["A"], focus=["定价"])
             c = claim([evidences[-1].evidence_id], evidences[-1].full_text)
+            c.update(brand="A", cell_id=orch.cell_id("A", "pricing_model"))
             c["verification"] = {"verdict": "supported", "reason": "fixture", "supports": []}
             return {"claims": [c], "evidence_selection": ctx.passages}
-        gap = QualityReport(issues=[{"target": "brand:A", "reason": "缺来源", "severity": "medium"}])
+        gap = QualityReport(issues=[{"target": "cell:pricing", "reason": "缺来源", "severity": "medium",
+                                    "cell_id": orch.cell_id("A", "pricing_model"), "brand": "A", "dimension": "pricing_model"}])
         done = QualityReport() if resolve else gap
         plan = {"brands": ["A"], "focus": ["定价"], "angles": ["a", "b", "c", "d"], "category": "software"}
         dispatch = {"lead": "L3-001", "members": [{"id": "L3-001", "reason": "lead"},
@@ -240,7 +241,7 @@ class ReworkTests(unittest.TestCase):
             events = asyncio.run(consume())
             self.assertEqual(snapshots, [["before"], ["before", "after"]])
             self.assertEqual(quality.call_count, 2)
-            self.assertIn("官方公告", collector.call_args_list[1].args[1])
+            self.assertEqual(collector.call_args_list[1].args[-1][0]["key"], "pricing_model")
             report = saved.call_args.args[0]
             self.assertIn("USD 20", report["claims"][0]["text"])
             self.assertEqual(report["quality_status"], "passed" if resolve else "needs_review")

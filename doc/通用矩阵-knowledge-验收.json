@@ -1,0 +1,16 @@
+{
+  "case": "knowledge",
+  "task_id": "t_b7320f08e676468f9dbfdd980a991a90",
+  "report_id": "r_542762ae1bc54a42a8d23d1da9842bea",
+  "url": "http://127.0.0.1:3400/report/r_542762ae1bc54a42a8d23d1da9842bea",
+  "cells": 20,
+  "fact_covered": 18,
+  "freshness_covered": 0,
+  "claims": 40,
+  "high": 23,
+  "quality_status": "needs_review",
+  "final_audit": "passed",
+  "rework_rounds": 1,
+  "browser_errors": [],
+  "checks": "real API + frontend stream + matrix attribution + draft honesty + page reload"
+}
