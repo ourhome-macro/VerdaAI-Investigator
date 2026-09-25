@@ -47,6 +47,9 @@ class RuntimeTests(unittest.IsolatedAsyncioTestCase):
         await rt._workers['task']
         self.assertEqual(rt.events('task', 1)[0]['type'], 'done')
         self.assertEqual(rt.state('task')['status'], 'done')
+        saved = self.conn.execute("SELECT status,data FROM research_run_metrics WHERE task_id='task'").fetchone()
+        self.assertEqual(saved["status"], "done")
+        self.assertIn("stage_seconds", saved["data"])
 
     async def test_expired_lease_requires_explicit_retry_and_filters_old_attempt(self):
         rt.init()
